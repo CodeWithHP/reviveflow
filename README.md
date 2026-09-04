@@ -1,6 +1,19 @@
+<div align="center">
+
 # 🔄 ReviveFlow — Agentic Revenue Recovery Copilot
 
-**Razorpay AI Buildathon — Track 03: AI Revenue Recovery**
+**Razorpay AI Buildathon · Track 03: AI Revenue Recovery**
+
+[![Python](https://img.shields.io/badge/Python-3.10-blue.svg)](#)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.141-009688.svg)](#)
+[![scikit-learn](https://img.shields.io/badge/scikit--learn-trained-f7931e.svg)](#)
+[![React](https://img.shields.io/badge/React-19-61dafb.svg)](#)
+[![Vite](https://img.shields.io/badge/Vite-8-646cff.svg)](#)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#)
+
+*Find leaked revenue · Diagnose it · Get it back — bounded, explainable, audited.*
+
+</div>
 
 ReviveFlow is an autonomous, self-gating AI agent that finds revenue slipping
 away for a merchant and **closes the loop** to win it back — from detecting the
@@ -12,6 +25,44 @@ to executing a **bounded** recovery workflow with a full audit trail.
 
 In one batch of **500 synthetic merchant events**, the agent recovered
 **₹50,696** at an ops cost of just **₹66** → **net value created ₹50,630**.
+
+---
+
+## ⚡ Quick start (Windows)
+
+Prereqs: **Python 3.10+** and **Node 18+**.
+
+```powershell
+# Step 1 — backend (FastAPI + auto-trained ML)
+cd backend
+python -m venv venv
+.\venv\Scripts\pip.exe install -r requirements.txt
+.\venv\Scripts\python.exe run_api.py          # → http://localhost:8000
+
+# Step 2 — frontend (React dashboard) in a NEW terminal
+cd frontend
+npm install
+npm run dev                                   # → http://localhost:5173
+```
+
+Open **http://localhost:5173**.
+
+> 💡 **Fastest path:** double-click **`start_all.cmd`** — it starts both servers and
+> opens the dashboard in one go.
+>
+> 🎬 **Pitch narrative:** `cd backend && python run_demo.py` prints the exact
+> numbers and a live audit trail you can recite in the 5-minute video.
+
+---
+
+## 📸 Live preview (local)
+
+![ReviveFlow Dashboard](https://img.shields.io/badge/Dashboard-React-blue.svg)
+
+The dashboard shows: recovery KPIs (money recovered, ops cost, net value),
+**honest model metrics** (precision / recall / F1 / accuracy), the outcome
+breakdown (recovered / stopped / failed / escalated), and a **live single-case
+audit trail** — run a case and watch the agent decide, act, and stop.
 
 ---
 
@@ -147,6 +198,30 @@ reviveflow/
 ├── frontend/                       # React 19 (Vite) dashboard
 └── docs/PITCH.md                   # pitch-video script & talking points
 ```
+
+---
+
+## 🎯 How ReviveFlow hits the Track-03 judging bar
+
+| Buildathon requirement | How ReviveFlow delivers it |
+|---|---|
+| *"Don't just identify the problem"* | Full **Detect → Diagnose → Plan → Execute → Audit → Measure** loop, not a detector. |
+| *"Measured money recovered across a batch"* | `run_demo.py` / `/api/batch` report **₹ recovered − ops cost** over a batch (₹50,696 recovered at ₹66 cost → ₹50,630 net on 500 events). |
+| *"Compliant escalation"* | Fraud / high-risk / expensive cases **escalate to a human gate** — the agent never auto-forces a risky action. |
+| *"Stopping rules"* | Hard caps in code: stop on recovery, on customer "no", on age cap, on budget cap, on max dunning touches (`core/config.py` + `workflow_engine.py`). |
+| *"An audit trail"* | Every case carries a timestamped, stage-tagged audit log. Exposed via `/api/detect` and the dashboard. |
+| *Honest metrics* | Precision / recall / F1 / accuracy + **false-positive cost** reported on a **held-out** oracle set. |
+
+---
+
+## 🧪 About the demo data (honesty note)
+
+The demo runs on **synthetic merchant events** (`data_generator.py`) that mimic
+realistic Razorpay payment, checkout, subscription and invoice patterns. Each
+event carries an **oracle label** (true recoverability). The detector must earn
+its metrics against that held-out oracle — nothing is cherry-picked. Drop in real
+**Razorpay test-mode keys** (`REVIVEFLOW_RAZORPAY_KEY_ID` / `_SECRET`) to exercise
+the live Orders / Payment-Links integration path.
 
 ---
 
