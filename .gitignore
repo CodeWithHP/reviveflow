@@ -1,0 +1,26 @@
+# Windows
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+
+# Env / secrets
+.env
+*.env
+
+# Data artifacts (model is regenerated on boot)
+backend/app/data/models/*.joblib
+
+# Node
+node_modules/
+frontend/dist/
+
+# Vite
+*.local
+
+# Editor
+.vscode/
+.idea/
